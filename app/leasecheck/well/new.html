@@ -1,0 +1,181 @@
+<div data-pageid="leasecheck-well-new" id="leasecheck-well-new" class="inner">
+
+
+    <div class="row-fluid">
+
+        <!-- start: Content -->
+        <div id="content" class="box span12">
+
+            <div class="box-header" data-original-title>
+                <h2>
+                    <i class="halflings-icon edit"></i><span class="break"></span><span data-bind="text:title"></span>
+                </h2>
+            </div>
+            ﻿<div class="box-content">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="columnGroup" >
+                            
+                            <div class="control-group" >
+                                <label class="control-label" for="focusedInput">API Number</label>
+                                <div class="controls">
+                                    <input data-bind="value:apiNumber">
+                                </div>
+                            </div>
+
+                            <div class="control-group" >
+                                <label class="control-label" for="focusedInput">Lease ID</label>
+                                <div class="controls">
+                                    <input data-bind="value:leaseId">
+                                </div>
+                            </div>
+                            
+                            <div class="control-group" >
+                                <label class="control-label" for="focusedInput">Well / Lease Name</label>
+                                <div class="controls">
+                                    <input data-bind="value:leaseName">
+                                </div>
+                            </div>
+
+                            <div class="control-group" >
+                                <label class="control-label" for="focusedInput">Field Name</label>
+                                <div class="controls">
+                                    <input data-bind="value:fieldName">
+                                </div>
+                            </div>
+
+                            <div class="control-group" data-selectvmid="wellType">
+                                <label class="control-label" for="selectErrorWellType">Well Type</label>
+                                <div class="controls">
+                                    <select id="selectErrorWellType" class="wellType-select"  data-rel="chosen-wellType" data-bind="options:wellTypeOptions,optionsText:'name',optionsValue:'id',value:type"></select>
+                                 
+                                </div>
+                            </div>
+                            
+                            <div class="control-group" data-selectvmid="wellStatus">
+                                <label class="control-label" for="selectErrorWellStatus">Well Status</label>
+                                <div class="controls">
+                                    <select id="selectErrorWellStatus" class="wellStatus-select"  data-rel="chosen-wellStatus" data-bind="options:wellStatusOptions,optionsText:'name',optionsValue:'id',value:wellStatus"></select>
+                                
+                                </div>
+                            </div>
+
+                            <div class="control-group" data-selectvmid="payStatus">
+                                <label class="control-label" for="selectErrorPayStatus">Pay Status</label>
+                                <div class="controls">
+                                    <select id="selectErrorPayStatus" class="payStatus-select"  data-rel="chosen-payStatus" data-bind="options:payStatusOptions,optionsText:'name',optionsValue:'id',value:payStatus"></select>
+                                 
+                                    
+                                </div>
+                            </div>
+                            
+                           <div class="control-group" data-selectvmid="initialOperator">
+                                <label class="control-label" for="selectErrorInitialOperator">Initial Operator</label>
+                                <div class="controls">
+                                    <select id="selectErrorInitialOperator" class="initialoperator-select"  data-rel="chosen-initialoperator" data-bind="options:companies,optionsText:'name',optionsValue:'id',value:initialOperator"></select>
+                                 
+                                    
+                                </div>
+                            </div>
+                          
+                            <div class="control-group" data-selectvmid="currentOperator">
+                                <label class="control-label" for="selectErrorCurrentOperator">Current Operator</label>
+                                <div class="controls">
+                                    <select id="selectErrorCurrentOperator" class="currentoperator-select"  data-rel="chosen-currentoperator" data-bind="options:companies,optionsText:'name',optionsValue:'id',value:currentOperator"></select>
+                                 
+                                    
+                                </div>
+                            </div>
+                            
+
+                            <div class="control-group">
+                                <label class="control-label">Section</label>
+                                <div class="controls">
+                                    <input id="section" type="number" min="0" max="10" data-bind="value:section" /> 
+                                </div>
+                            </div>                            
+                            
+                            <div class="control-group">
+                                <label class="control-label">Block</label>
+                                <div class="controls">
+                                    <input id="block" type="number" min="0" max="10" data-bind="value:block" /> 
+                                </div>
+                            </div>     
+                            
+                            <div class="control-group">
+                                <label class="control-label">Unit Size</label>
+                                <div class="controls">
+                                    <input id="unitSize" type="number" min="0" max="10" data-bind="value:unitSize" /> 
+                                </div>
+                            </div>                             
+
+                          
+                            
+                                                     <div class="control-group">
+                                <label class="control-label">Paid Interest</label>
+                                <div class="controls">
+                                    <input id="block" type="number" min="0" max="10" data-bind="value:paidInterest" /> 
+                                </div>
+                            </div>  
+
+
+                           
+                        </div>
+                        
+                        <div class="columnGroup" >
+
+                              <div class="control-group">
+                                <label class="control-label" for="date01">Spud Date</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge datepicker" id="date01" data-bind="datepicker:spudDate, datepickerOptions: {dateFormat: 'yy-mm-dd'}">
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label" for="date02">Completion Date</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge datepicker" id="date02" data-bind="datepicker:completionDate, datepickerOptions: {dateFormat: 'yy-mm-dd'}">
+                               
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label" for="date03">First Production Date</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge datepicker" id="date03" data-bind="datepicker:firstProductionDate, datepickerOptions: {dateFormat: 'yy-mm-dd'}">
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label">Latitude</label>
+                                <div class="controls">
+                                    <input id="block" type="number" min="0" max="10" data-bind="value:latitude" /> 
+                                </div>
+                            </div>        
+
+                            <div class="control-group">
+                                <label class="control-label">Longitude</label>
+                                <div class="controls">
+                                    <input id="block" type="number" min="0" max="10" data-bind="value:longitude" /> 
+                                </div>
+                            </div>     
+
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">Comments / Recording of Unit Designation</label>
+                                <div class="controls">
+                                    <textarea data-bind="value: unitRecording" class="input-xlarge focused" id="focusedInput" rows="10" type="text"  />
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">Notes</label>
+                                <div class="controls">
+                                    <textarea data-bind="value:notes" class="input-xlarge focused" id="focusedInput" rows="10" type="text"  />
+                                </div>
+                            </div>   
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,146 @@
+<html>
+	<head>
+		<script src="//code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" type="text/javascript"></script>
+		
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+		
+		<style>
+			.btn-file {
+				position: relative;
+				overflow: hidden;
+			}
+			.btn-file input[type=file] {
+				position: absolute;
+				top: 0;
+				right: 0;
+				min-width: 100%;
+				min-height: 100%;
+				font-size: 999px;
+				text-align: right;
+				filter: alpha(opacity=0);
+				opacity: 0;
+				background: red;
+				cursor: inherit;
+				display: block;
+			}
+			input[readonly] {
+				background-color: white !important;
+				cursor: text !important;
+			}
+		</style>
+		
+		<script>
+			$(document)
+				.on('change', '.btn-file :file', function() {
+					var input = $(this),
+					numFiles = input.get(0).files ? input.get(0).files.length : 1,
+					label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+					input.trigger('fileselect', [numFiles, label]);
+			});
+			
+			$(document).ready( function() {
+				$('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+					
+					var input = $(this).parents('.input-group').find(':text'),
+						log = numFiles > 1 ? numFiles + ' files selected' : label;
+					
+					if( input.length ) {
+						input.val(log);
+					} else {
+						if( log ) alert(log);
+					}
+					
+				});
+			});		
+		</script>
+	</head>
+	<body>
+
+		<form method="post">
+			<div style="margin: 50px; float: right">
+				<div class="input-group" style="width: 600px">
+					<span class="input-group-btn">
+						<span class="btn btn-primary btn-file">
+							Browse&hellip; <input id="fileInput" name="fileInput" type="file">
+						</span>
+					</span>	
+					<input type="text" class="form-control" readonly>
+					<span class="input-group-btn">
+						<input id="uploadBtn" name="uploadBtn" type="button" class="btn btn-primary" value="Upload File" />
+					</span>
+				</div>
+			</div>
+		</form>
+
+		
+		<script type="text/javascript">
+			var apiBase = "http://infiniteapi.azurewebsites.net/api/";
+			var apiAuthBase = "http://infiniteauth.azurewebsites.net/apiauth/";
+			//var apiBase = "http://localhost:6500/api/";
+			//var apiAuthBase = "http://localhost:6501/apiauth/";
+
+			var apiToken = "";
+			
+			$(function() {
+				$('#uploadBtn').click(function() {
+				
+					var files = $("#fileInput").get(0).files;
+					if (files.length > 0) {
+						if (window.FormData !== undefined) {
+							var data = new FormData();
+							for (i = 0; i < files.length; i++) {
+								data.append("tractDoc|123" + i, files[i]);
+							}
+							$.ajax({
+								type: "POST",
+								url: apiBase + "testfileupload",
+								contentType: false,
+								processData: false,
+								data: data,
+								beforeSend: function(request) {
+									request.setRequestHeader("AuthJWT", apiToken);
+									request.setRequestHeader("Audience", "LandTest");
+									request.setRequestHeader("UserId", "1");
+									request.setRequestHeader("ClientId", "1");
+									request.setRequestHeader("LandProjectId", "1");
+								},
+								success: function (data,status,response) {
+									for (i = 0; i < data.length; i++) {
+										if(data[0].Success)
+											alert('Upload successful!');
+									}
+									apiToken = response.getResponseHeader("AuthJWT");
+								}
+							});
+						} else {
+							alert("This browser doesn't support HTML5 multiple file uploads!");
+						}
+					} else {
+						alert("No file specified!");
+					}
+				});
+			
+				testAuth();
+			});
+			
+			
+			
+			var testAuth = function () {
+				$.post(
+				  apiAuthBase + "Token",
+					{ username: "zeb", password: "zeb", audience: "LandTest" },
+					function (data) {
+						alert('login successful');
+						apiToken = data.Token;
+					}, 'json')
+					.fail(function (jqXHR, textStatus, errorThrown) {
+						var msg = 'fail. response text: "' + jqXHR.responseText + '"';
+						alert(msg);
+					});
+			}
+
+			
+		</script>
+	</body>
+</html>

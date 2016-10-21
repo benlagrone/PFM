@@ -1,0 +1,47 @@
+<div data-pageid="reports-dashboard-index" id="reports-dashboard-index" class="inner">
+    <!--main-->
+    <!--div class="container-fluid"-->
+    <div class="row-fluid">
+        <!-- start: Content -->
+        <div id="content" class="box span12">
+            <div class="box-header">
+                <h2>
+                    <i class="halflings-icon align-justify"></i>
+                    <span class="break"></span>
+                    <span data-bind="text: title"></span>
+                </h2>
+            </div>
+            ﻿<div class="box-content">
+                <ul class="tickets metro " data-bind="foreach:reports">
+                    <li class="ticket row-fluid" data-bind="css:'fa fa-file-text-o'">
+                        <div class="span2" data-bind="template:checkImage('/foo/'+id+'.png')?'showImage':'noImage'"></div>
+                        <script type="text/html" id="showImage">
+                            <i data-bind="attr:{style:'background:url(checkImage(/foo/'+id+'.png))'}"></i>
+                        </script>
+                          <script type="text/html" id="noImage">
+                              <i class="icon-file-text-alt icon-5x"></i>
+                          </script>
+                          <div class="info span10">
+                              <span class="header row-fluid">
+                                  <span class="title span8" data-bind="text:id"></span>
+                                  <span class="launchReports span4">
+                                      <ul class="row-fluid">
+                                          <li class="span3"><a data-bind="attr:{'href':'/foo/'+id}"><img src="img/word.png"/></a></li>
+                                          <li class="span3"><a data-bind="attr:{'href':'/foo/'+id}"><img src="img/excel.png"/></a></li>
+                                          <li class="span3"><a data-bind="attr:{'href':'/foo/'+id}"><img src="img/adobe.png"/></a></li>
+                                      </ul>
+                                  </span>
+                              </span>
+                              <span class="content">
+                                  <span data-bind="text:description"></span>
+                                  <span data-bind="text:category"></span>
+                              </span>
+                          </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/div-->
+    <!--/main-->
+</div>

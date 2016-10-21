@@ -1,0 +1,38 @@
+<div data-pageid="leasecheck-well-index" id="leasecheck-well-index" class="inner">
+
+    <!--main-->
+
+    <!--div class="container-fluid"-->
+
+    <div class="row-fluid">
+
+        <!-- start: Content -->
+        <div id="content" class="box span12">
+
+            <div class="box-header" data-original-title>
+                <h2>
+                    <i class="halflings-icon align-justify"></i><span class="break"></span><span data-bind="text: title"></span>
+                </h2>
+            </div>
+            ﻿<div class="box-content">
+                <div class="itemList tractList" data-bind='simpleGrid: gridViewModel'> </div>
+
+                <!--button data-bind='click: addItem'>
+                    Add item
+                </button-->
+
+                <button data-bind='click: sortByName'>
+                    Sort by name
+                </button>
+
+                <button data-bind='click: jumpToFirstPage, enable: gridViewModel.currentPageIndex'>
+                    Jump to first page
+                </button> 
+            </div>
+        </div>
+    </div>
+    <!--/div-->
+    <!--/main-->
+
+</div>
+

@@ -1,0 +1,207 @@
+<div data-pageid="leasecheck-tract-new" id="leasecheck-tract-new" class="inner">
+
+
+    <div class="row-fluid">
+
+        <!-- start: Content -->
+        <div id="content" class="box span12">
+
+            <div class="box-header" data-original-title>
+                <h2>
+                    <i class="halflings-icon edit"></i><span class="break"></span><span data-bind="text:title"></span>
+                </h2>
+            </div>
+            ﻿<div class="box-content">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="columnGroup" data-bind="style:{width: formLocked()?'90%':''}">
+
+                            <div class="control-group" >
+                                <label class="control-label" for="focusedInput">Tract Number</label>
+                                <div class="controls">
+                                    <input readonly data-bind="value:createTractNumber">
+                                </div>
+
+                            </div>
+
+                            <div class="control-group" data-bind="visible:formLocked()==false">
+                                <label class="control-label">Construct Tract Number Method</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="useSectionTownshipRange" data-bind="checked:tractIdConstructMethod,disable:formLocked">
+                                        Use Section-Township-Range
+                                    </label>
+                                    <div style="clear:both"></div>
+                                    <label class="radio">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="useAbstract" data-bind="checked:tractIdConstructMethod,disable:formLocked">
+                                        Use Abstract
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="control-group useEither" data-selectvmid="state" data-tractnumber="1" data-bind="visible:formLocked()==false">
+                                <label class="control-label" for="selectError">Select State</label>
+                                <div class="controls">
+                                    <select id="selectError" class="states-select"  data-rel="chosen-state" data-bind="options:statesOptions,optionsText:'abbreviatedName',optionsValue:function(item){return item.id + ':'+item.abbreviatedName},selectedOptions: state,disable:formLocked"></select>
+                                </div>
+                            </div>
+
+                            <div class="control-group useEither" data-selectvmid="county" data-tractnumber="1" data-bind="visible:formLocked()==false">
+                                <label class="control-label" for="selectError1">County</label>
+                                <div class="controls"> 
+
+                                    <select id="selectError1" class="counties-select" data-rel="chosen-county" data-bind="options:countiesOptions,optionsText:'Name',optionsValue:'id',selectedOptions: county,disable:formLocked">
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="control-group useSectionTownshipRange" data-bind="visible:formLocked()==false">
+                                <label class="control-label">Section</label>
+                                <div class="controls">
+                                    <input id="section" type="number" min="0" max="10" data-bind="value:section,disable:tractIdConstructMethod() === 'useAbstract'" /> 
+                                </div>
+                            </div>
+
+                            <div class="control-group useSectionTownshipRange" data-bind="visible:formLocked()==false">
+                                <label class="control-label">Township</label>
+                                <div class="controls">
+                                    <div class="subcontrol">
+                                        <input id="township" type="number" min="0" max="10" data-bind="value:township,disable:tractIdConstructMethod() === 'useAbstract'" /> 
+                                    </div>
+                                    <div class="subcontrol">
+                                        <label class="radio">
+                                            <input type="radio" name="optionsRadios2" id="optionsRadios1" value="North" data-bind="checked:townshipDirection,disable:tractIdConstructMethod() === 'useAbstract'">
+                                            North
+                                        </label>
+                                        <div style="clear:both"></div>
+                                        <label class="radio">
+                                            <input type="radio" name="optionsRadios2" id="optionsRadios2" value="South" data-bind="checked:townshipDirection,disable:tractIdConstructMethod() === 'useAbstract'">
+                                            South
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="control-group useSectionTownshipRange" data-bind="visible:formLocked()==false">
+                                <label class="control-label" for="focusedInput">Range</label>
+                                <div class="controls">
+                                    <div class="subcontrol">
+                                        <input type="number" min="0" max="50" data-bind="value: range,disable:tractIdConstructMethod() === 'useAbstract'" class="input-xlarge focused" id="focusedInput" type="text"  >
+                                    </div>
+                                    <div class="subcontrol">
+                                        <label class="radio">
+                                            <input type="radio" name="optionsRadios3" id="optionsRadios1" value="East"  data-bind="checked:rangeDirection,disable:tractIdConstructMethod() === 'useAbstract'">
+                                            East
+                                        </label>
+                                        <div style="clear:both"></div>
+                                        <label class="radio">
+                                            <input type="radio" name="optionsRadios3" id="optionsRadios2" value="West"  data-bind="checked:rangeDirection,disable:tractIdConstructMethod() === 'useAbstract'">
+                                            West
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="columnGroup" data-bind="style:{width: formLocked()?'90%':'50%'}">
+
+                            <div class="control-group useAbstract" data-bind="visible:formLocked()==false">
+                                <label class="control-label" for="focusedInput">Abstract</label>
+                                <div class="controls">
+                                    <input data-bind="value: tabstract,disable:tractIdConstructMethod() === 'useSectionTownshipRange'" class="input-xlarge focused" id="focusedInput" type="text"  >
+                                </div>
+                            </div>
+
+                            <div class="control-group useEither" data-bind="visible:formLocked()==false">
+                                <label class="control-label" for="focusedInput">Additional Identifier</label>
+                                <div class="controls">
+                                    <input data-bind="value: tractNumberAppend" class="input-xlarge focused" id="focusedInput" type="text"  >
+                                </div>
+                            </div>
+
+                            <div class="control-group" data-selectvmid="tracttypes">
+                                <label class="control-label" for="selectError4">Tract Type</label>
+                                <div class="controls">
+
+                                    <select id="selectError4" class="tracttype-select" data-rel="chosen-tracttype" data-bind="options:tractTypeOptions,optionsText:'name',optionsValue:'id',value:tractType">
+                                    </select>
+                                    
+                                </div>
+                            </div> 
+
+
+                            <div class="control-group">
+                                <label class="control-label" for="optionsCheckbox2">Producing</label>
+                                <div class="controls">
+                                    <label class="checkbox">
+                                        <input type="checkbox" id="optionsCheckbox2" value="option1" >
+
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+                            <div class="control-group" data-selectvmid="status">
+                                <label class="control-label" for="selectError5">Status</label>
+                                <div class="controls">
+                                    
+                                    <select id="selectError5" class="tractstatus-select" data-rel="chosen-tractstatus" data-bind="options:statusOptions,optionsText:'name',optionsValue:'id',value:tractStatus"></select>
+                                </div>
+                            </div>
+
+
+
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">gross acreage</label>
+                                <div class="controls">
+                                    <input data-bind="value: grossacreage" class="input-xlarge focused" id="focusedInput" type="text"  >
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">survey</label>
+                                <div class="controls">
+                                    <input data-bind="value: survey" class="input-xlarge focused" id="focusedInput" type="text"  >
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="focusedInput">legal description</label>
+                                <div class="controls">
+                                    <textarea data-bind="value: legaldescription" class="input-xlarge focused" id="focusedInput" rows="10" type="text"  />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">File Upload</label>
+                                <div class="controls">
+                                    <div class="input-group" style="width: 600px">
+					<span class="input-group-btn">
+						<span class="btn btn-primary btn-file">
+							Browse… <input id="fileInput" name="fileInput" type="file">
+						</span>
+					</span>	
+					<input type="text" class="form-control" readonly="">
+					<span class="input-group-btn">
+						<input id="uploadBtn" name="uploadBtn" type="button" class="btn btn-primary" value="Upload File">
+					</span>
+				</div>
+                                </div>
+                                
+                            </div>
+
+                           
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+

@@ -1,0 +1,22 @@
+/*
+For printing
+*/
+/* 
+    Created on : Nov 25, 2013, 4:00:00 PM
+    Author     : benjaminlagrone
+*/
+
+.navMenu,.systemMenu,#sidebar,#commandMenu,#relatedItems{display:none!important;}
+.map-container{width:100%!important;}
+#content h2{display:none!important;}
+.control-group{margin:0!important;}
+#content .box-header{display:none;}
+#content .control-label{padding:0!important;float:left!important;}
+#content .control-label:after{content:": "}
+#content{page-break-after:always}
+.box-content{padding:0;}
+form{margin:0!important;}
+.box{border:none!important;}
+input,textarea{border:none!important;}
+textarea{width:100%!important;clear:left!important;}
+main > .container-fluid > .row-fluid > .span7{display:none!important;}

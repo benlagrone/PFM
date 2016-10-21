@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Infinite GIS</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" >
+        <!-- start: Mobile Specific -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- end: Mobile Specific -->
+
+        <!-- start: CSS -->
+        <link id="bootstrap-style" href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link id="base-style" href="css/style.css" rel="stylesheet">
+        <link id="base-style-responsive" href="css/style-responsive.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/ie10mobile.css" />
+        <link rel="stylesheet" href="css/glyphicons.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-forms.css" />
+        <link rel="stylesheet" href="css/style-responsive.css" />
+
+        <link href="css/benCSS.css" rel="stylesheet" media="screen">
+        <!-- Include Print CSS -->
+<link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+
+        <!-- end: CSS -->
+        <script type="text/javascript" charset="utf-8" src="js/lib/util/knockout-2.2.1.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/lib/ui/knockout.simpleGrid.1.3.js"></script>
+        
+        <script type="text/javascript">
+            var pageRoute;
+            dojoConfig = {
+                parseOnLoad: false,
+                async: true,
+                packages: [
+					{ name: "base", location: location.pathname.replace(/\/[^/]+$/, "") + "js" },
+                                        { name: "ui", location: location.pathname.replace(/\/[^/]+$/, "") + "js/lib/ui" },
+                                        { name: "util", location: location.pathname.replace(/\/[^/]+$/, "") + "js/lib/util" },
+                                        { name: "infinitegis", location: location.pathname.replace(/\/[^/]+$/, "") + "js/infinitegis" },
+                ]
+            };
+        </script>
+
+        <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
+        <script src="http://js.arcgis.com/3.7/"></script>
+
+        <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+                <link id="ie-style" href="css/ie.css" rel="stylesheet">
+        <![endif]-->
+
+        <!--[if IE 9]>
+                <link id="ie9style" href="css/ie9.css" rel="stylesheet">
+        <![endif]-->
+
+
+        <link rel="shortcut icon" href="img/favicon.ico">
+
+
+    </head>
+    <body id="body" data-bind="css: currentPageLabel">
+
+        <header>
+            <div class="navbar navMenu">
+              
+                
+                <ul class="nav" data-bind="foreach: mainMenu">
+                    <li><a data-bind="text: label,attr:{href:'#'+path,title:label}"></a></li>
+                </ul>
+          
+
+            </div>
+
+            <div class="navbar systemMenu">
+                <div class="row-fluid">
+                    <div class="span3"> 
+                        <a class="brand">
+
+                           <span><img src="img/INFINITE_logo_side_149.png"></span>
+                        </a>
+                    </div>
+                    <div class="search span7">
+
+                        <span><input placeholder="Search"/></span>
+                        <button>search</button>
+                    </div>
+                    <div class="span2 systemIcons">
+                        <a><i class="glyphicons-icon cogwheel Settings"></i></a>
+                        <a><i class="glyphicons-icon user User"></i></a>
+                        <a><i class="glyphicons-icon warning_sign Alerts"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            
+            <div class="navbar contextMenu">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <h2 id="contextMenuTitle" data-bind="text:contextMenuTitle"></h2>
+                        <i data-bind="css:{'glyphicons-icon show_thumbnails_with_lines':sideNavMenuItems().length > 0,'hide':sideNavMenuItems().length == 0}" id="togglemenu" ></i>
+                    </div>
+                    
+                    <div class="span4">
+                        <h2><span data-bind="text:referencePointLabel"></span>&nbsp;<span data-bind="text:referencePoint"></span></h2>
+                        <ul data-bind="foreach: contextdata">
+                            <li><span data-bind="text: label"></span>:&nbsp;<span data-bind="text: data"></span></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+    <main>
+
+		<!-- the following Knockout bind will always apply CSS class "span3" to the div, and only apply CSS class
+			 "hideNav" if there are no sideNavMenuItems to show -->
+       
+
+                             
+                    <div data-bind="if:sideNavMenuItems().length > 0">
+                    
+                    <div id="sidebar" class="" data-bind="template:{ name: 'commonMenu'}"></div>
+                </div>
+                
+                <script type="text/html" id="commonMenu">
+                    <div class="sidebarNav">
+                        <ul id="sideNav" data-bind="foreach:sideNavMenuItems">
+                            <li data-bind="css:CSSClass">
+                                <span data-bind="if:CSSClass == 'new',
+                                      css:'small hidden-deskTopmenuItems'">
+                                <a data-bind="css: {
+                                   'glyphicons-icon circle_plus icon':CSSClass == 'new'
+                                   },
+                                   text: '',attr:{href:'#'+path,title:label}"></a>
+                                </span> 
+                              
+                                <a data-bind="css: CSSClass,text: label == 'new' ? 'new':label,attr:{href:'#'+path,title:label}"></a>
+                            </li>
+                            
+                           
+                        </ul>  
+                        <div class="" data-bind="if:contextualReports().length > 0">
+
+                            <div id="relatedItems" class="box red span2" ontablet="span10" ondesktop="span12" class="" data-bind="template:{ name: 'contextualReports'}"></div>
+                        </div>
+
+                    </div>
+                    <i class="glyphicons-icon circle_question_mark"></i>
+                    <div class="help-text">
+                        <p data-bind="text:menuHelpText"></p>
+                    </div> 
+                </script>
+     
+                            <script type="text/html" id="contextualReports">
+					<div class="box-header">
+						<h2>Reports</h2>
+						<div  class="box-icon" data-bind="foreach:contextualButtons">
+							<a data-bind="click:action,css:CSSClass,html:label,attr:{id:id}"></a>
+						</div>
+					</div>
+					<div id="contextualReports" class="box-content" style="display: none;position:absolute;">
+						<ul class="dashboard-list" data-bind="foreach:contextualReports">
+                                                <li>
+                                                <span><strong>ID</strong></span><span data-bind="text:id"></span>
+                                                <span><strong>Name</strong></span><span data-bind="text:name"></span>
+                                                <span><strong>Data</strong></span><span data-bind="text:data1"></span>
+                                                <span><strong>Data</strong></span><span data-bind="text:data2"></span>
+                                                </li>
+                                                </ul>
+                                        
+					</div>
+				
+               
+        </script>
+        <div class="container-fluid" data-bind="css: { showFull: sideNavMenuItems().length < 1}">
+            
+            <!-- hide this if there is no commands to be shown here-->
+            
+            <div class="row-fluid">
+                <div class="span7" data-bind="if:commandMenuButtons().length > 0">
+                   
+                    <div id="commandMenu" class="" data-bind="template:{ name: 'commands'}"></div>
+                </div>
+                <div class="span5" data-bind="if:relatedTypes().length > 0">
+
+                    <div id="relatedItems" class="box span12" ontablet="span10" ondesktop="span12" class="" data-bind="template:{ name: 'related'}">
+
+                    </div>
+                </div>
+                
+                <script type="text/html" id="related">
+                    <div class="box-header">
+                        <h2><i class="halflings-icon list"></i><span class="break"></span></h2>
+        
+                        
+                        <div class="dropdown hidden-phone ignoreModal" >
+                             <div data-bind="if:relatedItems().length > 0">
+                                    <div class="box-icon" data-bind="template:{name:'relatedButtonTemplate',foreach:relatedButtons}"></div>
+                            </div>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span data-bind="text:relatedType"></span>
+                                <i class="halflings-icon warning-sign"></i>
+                            </a>
+                               
+                            
+                            <ul class="dropdown-menu notifications" data-bind="foreach:relatedTypes">
+
+                                <li data-bind="click:action">
+                                    <a href="#">
+                                        <span class="icon blue"><i class="icon-user"></i></span>
+                                        <span class="message" data-bind="text:label"></span>
+                                        <span class="time" data-bind="text:count">1 min</span> 
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div id="relatedItemList" class="box-content" style="display: none;position:absolute;">
+                        <ul class="dashboard-list" data-bind="foreach:relatedItems">
+                            <li>
+                                <a data-bind="attr:{href:url}">
+                                    <span><strong>ID</strong></span><span data-bind="text:id"></span>
+                                    <span><strong>Name</strong></span><span data-bind="text:name"></span>
+                                    <span><strong>Data</strong></span><span data-bind="text:data1"></span>
+                                    <span><strong>Data</strong></span><span data-bind="text:data2"></span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+				
+               
+        </script>
+            <script type="text/html" id="relatedButtonTemplate">
+                                        <a data-bind="click:action,css:CSSClass,html:label,attr:{id:id}"></a>
+        </script>
+            <script type="text/html" id="commands">
+              
+                <div class="row-fluid navbar commandMenu" data-bind="foreach: commandMenuButtons">
+                    <div class="span3">
+                        <button data-bind="text: label, value: value, css: CSSClass, click:action"></button>
+                    </div>
+                </div>
+            </script>
+            
+           
+            
+            <div class="main-wrap row-fluid">
+
+                <div class="form-container span7">
+                    <div class="page-host" data-bind="css: showMap() == 'no' ? 'span10' : 'span6'"></div>
+                    
+                </div>
+                
+                  <div data-bind="css: showMap() == 'no' ? 'hidden span0' : 'map-container box span5'">
+                      
+                                       <div class="box-header">
+                        <h2>
+                            <i class="halflings-icon edit"></i><span class="break"></span>Map View
+                        </h2>
+                    </div>
+                    <div class="box-content">
+                        <div id="mapDiv" style="width:100%; height:100%;z-index:10!important;"></div>
+                    </div>
+                </div>
+               
+
+                </div>
+             
+            </div>
+
+           
+
+
+        </div>
+    </main>
+
+    <div id="myModal" class="modal hide fade ignoreModal" data-bind="css: currentPageLabel" style="display: none;" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3 data-bind="text:modalTitle"></h3>
+		</div>
+		<div class="modal-body">
+			<p data-bind="html:modalHTML"></p>
+		</div>
+		<div class="modal-footer" data-bind="foreach:modalButtons">
+                   
+                    <a data-dismiss="modal" data-buttontype="modal" data-bind="attr:{href:'#',id:id,title:label,'data-sentlink':$parent.modalSentLink},css:'btn ' + CSSClass,text:label,click:action"></a>
+		</div>
+        
+			
+	</div>
+    <div class="spinner" style="display:none;"><div class="spinnerInside spinnerInside-1"></div><div class="spinnerInside spinnerInside-2"></div>
+        <span data-bind="text:spinnerText"></span>
+    </div>
+    
+    <!-- javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/lib/ui/jquery-1.9.1.min.js"></script>
+<script src="js/require.js"></script>
+    
+    <script src="js/lib/ui/jquery-migrate-1.0.0.min.js"></script>
+    
+    <!--script src="js/lib/ui/routing.js"></script-->
+    
+    <script src="js/lib/ui/jquery-ui-1.10.0.custom.min.js"></script>
+
+    <script src="js/lib/ui/jquery.ui.touch-punch.js"></script>
+
+    <script src="js/lib/ui/modernizr.js"></script>
+
+    <script src="js/lib/ui/bootstrap.min.js"></script>
+
+    <script src="js/lib/ui/jquery.cookie.js"></script>
+
+    <script src='js/lib/ui/fullcalendar.min.js'></script>
+
+    <script src='js/lib/ui/jquery.dataTables.min.js'></script>
+
+    <script src="js/lib/ui/excanvas.js"></script>
+    <script src="js/lib/ui/jquery.flot.js"></script>
+    <script src="js/lib/ui/jquery.flot.pie.js"></script>
+    <script src="js/lib/ui/jquery.flot.stack.js"></script>
+    <script src="js/lib/ui/jquery.flot.resize.min.js"></script>
+
+    <script src="js/lib/ui/jquery.chosen.min.js"></script>
+
+    <script src="js/lib/ui/jquery.uniform.min.js"></script>
+
+    <script src="js/lib/ui/jquery.cleditor.min.js"></script>
+
+    <script src="js/lib/ui/jquery.noty.js"></script>
+
+    <script src="js/lib/ui/jquery.elfinder.min.js"></script>
+
+    <script src="js/lib/ui/jquery.raty.min.js"></script>
+
+    <script src="js/lib/ui/jquery.iphone.toggle.js"></script>
+
+    <script src="js/lib/ui/jquery.uploadify-3.1.min.js"></script>
+
+    <script src="js/lib/ui/jquery.gritter.min.js"></script>
+
+    <script src="js/lib/ui/jquery.imagesloaded.js"></script>
+
+    <script src="js/lib/ui/jquery.masonry.min.js"></script>
+
+    <script src="js/lib/ui/jquery.knob.modified.js"></script>
+
+    <!--script src="js/lib/ui/jquery.sparkline.min.js"></script-->
+
+    <script src="js/lib/ui/counter.js"></script>
+
+    <script src="js/lib/ui/retina.js"></script>
+
+    <script src="js/lib/ui/custom.js"></script>
+
+    <!--script src="js/viewModel.js"></script>
+
+    <script src="js/routing.js"></script-->
+	
+</body>
+</html>
